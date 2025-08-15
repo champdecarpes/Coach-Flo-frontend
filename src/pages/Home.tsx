@@ -4,7 +4,7 @@
 // import DjangoImgSrc from "/images/django-logo-negative.png";
 
 // import { RestService } from "../api/services.gen.ts";
-import BasicLayout from "../features/Layouts/BasicLayout/BasicLayout.tsx";
+import TableViewLayout from '../features/Layouts/BasicLayout/TableViewLayout.tsx';
 
 const Home = () => {
   // const [showBugComponent, setShowBugComponent] = useState(false);
@@ -19,9 +19,9 @@ const Home = () => {
   // }, []);
 
   return (
-    <BasicLayout>
+    <TableViewLayout>
       test
-    </BasicLayout>
+    </TableViewLayout>
   );
 };
 
