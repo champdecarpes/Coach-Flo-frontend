@@ -9,15 +9,16 @@ interface MainLeftNavSideBarProps {
 }
 
 export default function TableViewLayout({ children }: MainLeftNavSideBarProps) {
+
   return (
-    <div className="w-full min-h-screen flex flex-1 flex-row">
-      <div className="w-1/4">
+    <div className="max-h-screen flex flex-row">
+      <div className="flex flex-row">
         <MainLeftNavPanel/>
-        <ListLeftNavPanel/>
+        <ListLeftNavPanel title="Clients"/>
       </div>
 
-      <div className="flex flex-1 flex-col h-full">
-        <MainHeader/>
+      <div className="flex flex-col w-full">
+        <MainHeader clientView={true} title="SUBLINK"/>
         <div>
           {children}
         </div>

@@ -1,52 +1,108 @@
-import { Container, Nav } from 'react-bootstrap';
 import MainIcon from 'assets/icon.png';
+import styled from 'styled-components';
+import { Nav } from 'react-bootstrap';
+import { Users, BookMarked, Network } from 'lucide-react';
 
-interface NavContainerPros {
-  children: React.ReactNode;
-}
 
+// Самая левая основаная навигационная панель
 export default function MainLeftNavPanel() {
   return (
-    <div className="flex flex-col justify-between h-full w-1/6 bg-gray-200">
-      <Nav variant="pills" defaultActiveKey="/clients" className="flex flex-col justify-around h-auto">
-        <Nav.Item className="w-full">
-          <img src={MainIcon} alt=""/>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/clients">
-            Clients
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/library">
-            Library
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
+    <NavPanelContainer>
 
-
+      {/* Вверхний блок с основными навигационными подстраницами */}
       <NavContainer>
-        <Nav.Item>
-          <Nav.Link href="/team">
-              Team
+        <div className="flex align-center justify-between">
+          <Icon src={MainIcon} alt=""/>
+        </div>
+        <LeftElement>
+          <Nav.Link href="/clients">
+            <Users size={25}/>
           </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/account">
-              Account
+        </LeftElement>
+        <LeftElement>
+          <Nav.Link href="/library">
+            <BookMarked size={25} />
           </Nav.Link>
-        </Nav.Item>
+        </LeftElement>
       </NavContainer>
 
-    </div>
+      {/* Нижний блок с настройками и командой */}
+      <NavContainer>
+        <LeftElement>
+          <Nav.Link href="/team">
+            <Network size={25}/>
+          </Nav.Link>
+        </LeftElement>
+
+        <LeftElement className="bg-red-500" $active>
+          <Nav.Link href="/account">
+            <UserNaming>
+              NP
+            </UserNaming>
+          </Nav.Link>
+        </LeftElement>
+      </NavContainer>
+
+    </NavPanelContainer>
   );
 }
 
 
-export function NavContainer({ children }: NavContainerPros) {
-  return (
-    <Container className="flex flex-col justify-around h-auto">
-      {children}
-    </Container>
-  );
+const Icon = styled.img`
+  margin: .25em .25em 1em;
+  width: 3vw;
+  height: 3vw;
+`;
+
+const NavPanelContainer = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  width: 4vw;
+  padding: 1em;
+  border-right: 3px #D9D9D9 solid;
+`;
+
+
+interface LeftElementProps {
+  $active?: boolean;
 }
+
+const LeftElement = styled.nav<LeftElementProps>`
+  margin: .5em;
+  width: 2.5vw;
+  height: 2.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20%;
+
+  background: ${({ $active }) => ($active ? 'steelblue' : 'white')};
+
+  transition: .25s;
+
+  &:hover {
+    background: #4f9bdc;
+    color: white;
+  }
+
+`;
+
+const NavContainer = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const UserNaming = styled.div`
+  width: 2.5em;
+  height: 2.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .8em;
+  color: white;
+  font-weight: bold;
+`;

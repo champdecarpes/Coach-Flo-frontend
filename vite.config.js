@@ -33,9 +33,11 @@ export default defineConfig({
     alias: {
       // Aliases for easier imports
       src: path.resolve('/src'),
-      css: path.resolve('src/css'),
+      css: path.resolve('src/styles'),
       dev: path.resolve('src/dev'),
       assets: path.resolve('/src/assets'),
+      app: path.resolve('src/app'),
+      pages: path.resolve('src/pages'),
     },
   },
   // Build configuration

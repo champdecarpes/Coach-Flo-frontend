@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.dropdown-icons::after {
+  display: none !important;
+}

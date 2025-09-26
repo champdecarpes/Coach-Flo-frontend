@@ -1,25 +1,45 @@
 import './css/App.css';
-import Home from './pages/Home.tsx';
-import { useRoutes } from 'react-router-dom';
-import { AllClients } from './pages/Clients/AllClients.tsx';
+import {RouterProvider} from 'react-router-dom';
+import {router} from "@/routes";
 
 
-function App() {
+export default function App() {
 
-  return useRoutes([
-    {
-      path: '/',
-      element: <Home/>,
-    },
-    {
-      path: 'clients',
-      element: <Home/>,
-    },
-    {
-      path: 'library',
-      element: <Home/>,
-    },
-  ]);
+  return (
+    <RouterProvider router={router}/>
+  )
+
+  // import {
+//   createBrowserRouter,
+//   RouterProvider,
+//   useLoaderData,
+// } from "react-router-dom";
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/clients",
+//     loader: async () => {
+//       const r = await fetch("/api/clients");
+//       return r.json();
+//     },
+//     element: <ClientsWithData />,
+//   },
+//   {
+//     path: "/settings/:section?",
+//     loader: async ({ params }) => {
+//       const r = await fetch(`/api/settings?section=${params.section ?? ""}`);
+//       return r.json();
+//     },
+//     element: <SettingsWithData />,
+//   },
+// ]);
+
+// function ClientsWithData() {
+//   const data = useLoaderData() as Client[];
+//   return <List items={data} />;
+// }
+
+// export default function App() {
+//   return <RouterProvider router={router} />;
+// }
 }
-
-export default App;
