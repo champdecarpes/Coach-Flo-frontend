@@ -1,11 +1,11 @@
-import MainIcon from 'assets/icon.png';
+import MainIcon from '@/assets/icon.png';
 import styled from 'styled-components';
 import { Nav } from 'react-bootstrap';
 import { Users, BookMarked, Network } from 'lucide-react';
 
 
-// Самая левая основаная навигационная панель
-export default function MainLeftNavPanel() {
+// Самая левая основная навигационная панель
+export default function LeftNavPanel() {
   return (
     <NavPanelContainer>
 
@@ -42,7 +42,6 @@ export default function MainLeftNavPanel() {
           </Nav.Link>
         </LeftElement>
       </NavContainer>
-
     </NavPanelContainer>
   );
 }

@@ -29,9 +29,9 @@
       "@/*": [
         "*"
       ]
-    },
-    "include": [
-      "src"
-    ]
-  }
+    }
+  },
+  "exclude": [
+    "src/api/graphql_queries.js"
+  ]
 }

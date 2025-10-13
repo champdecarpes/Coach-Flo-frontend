@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-import { ClipboardList, Bell, Menu } from 'lucide-react';
-import { Tab, Tabs, Dropdown } from 'react-bootstrap';
+import {ClipboardList, Bell, Menu} from 'lucide-react';
+import {Dropdown} from 'react-bootstrap';
 
 interface MainHeaderProps {
-  clientView?: boolean,
   title: string
 }
 
-export default function MainHeader({ clientView, title }: MainHeaderProps) {
+export default function LibraryHeader({title}: MainHeaderProps) {
 
   // Нужно получать данные в какой вкладке мы сейчас, чтобы отображать количество данных
 
@@ -17,18 +16,14 @@ export default function MainHeader({ clientView, title }: MainHeaderProps) {
 
       {/* Левый блок */}
       <div className="flex flex-row justify-center h-full">
-        {clientView ? (
-          <ClientHeader name={'TEST'}/>
-        ) : (
-          <>
-            <div className="m-auto">
-              <Menu size={20}/>
-            </div>
-            <TitleHeader>
-              {title}
-            </TitleHeader>
-          </>
-        )}
+
+        <div className="m-auto">
+          <Menu size={20}/>
+        </div>
+        <TitleHeader>
+          {title}
+        </TitleHeader>
+
       </div>
 
       {/* Правый блок */}
@@ -69,40 +64,6 @@ export default function MainHeader({ clientView, title }: MainHeaderProps) {
   );
 }
 
-
-interface ClientHeaderProps {
-  name: string;
-}
-
-function ClientHeader({ name }: ClientHeaderProps) {
-
-  // Выделять какой именно сейчас блок должен быть помечен как выделенный useState
-  return (
-    <div className="flex flex-row w-full">
-      <div className="m-auto">
-        <Menu size={20}/>
-      </div>
-
-      <div className="flex flex-col justify-around mx-7">
-        <div className="font-bold text-2xl mt-2">
-          {name}
-        </div>
-
-        <NavTabs defaultActiveKey="overview" variant="underline"
-          className="grid-cols-5 gap-3 h-10">
-          <Tab title="Overview" eventKey="overview"/>
-          <Tab title="Training" eventKey="training"/>
-          <Tab title="Tasks" eventKey="task"/>
-          <Tab title="Metrics" eventKey="metrics"/>
-          <Tab title="Settings" eventKey="settings"/>
-        </NavTabs>
-
-      </div>
-    </div>
-  );
-}
-
-
 const MainHeaderStyled = styled.div`
   height: 9vh;
   padding: 0 1em;
@@ -118,35 +79,13 @@ const TitleHeader = styled.div`
   font-size: 1.5em;
 `;
 
-const NavTabs = styled(Tabs)`
-  display: grid;
-  font-size: .9em;
-  border: 0;
-
-  .nav-link {
-    color: rgb(156, 163, 175);
-    border: none;
-    font-weight: 600;
-
-    &:hover {
-      color: #5f6673;
-    }
-  }
-
-  .nav-link.active {
-    color: #184EFF;
-    font-weight: 600;
-    border-bottom: 2px solid #184EFF;
-  }
-`;
-
 
 const IconMenu = styled(Dropdown.Menu)`
   background: #1e293b;
   border-radius: 12px;
   padding: 0.5rem;
   margin-top: 1em;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   .dropdown-item {
     color: white;

@@ -1,4 +1,4 @@
-import {Ring} from 'ldrs/react'
+import { Ring } from 'ldrs/react';
 
 export function RingSuspense() {
   return (
@@ -9,5 +9,5 @@ export function RingSuspense() {
       speed="2"
       color="black"
     />
-  )
+  );
 }
