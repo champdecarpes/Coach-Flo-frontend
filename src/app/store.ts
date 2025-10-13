@@ -1,7 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '@/features/auth/authSlice';
+import metricReducer from '@/features/metrics/metricSlice';
+import calendarReducer from '@/features/calendar/calendarSlice';
+import exerciseReducer from "@/features/exercises/exerciseSlice.ts";
+import dataReducer from '@/features/data/dataSlice';
+
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    metrics: metricReducer,
+    auth: authReducer,
+    calendar: calendarReducer,
+    data: dataReducer,
+    exercises: exerciseReducer,
+  },
   // middleware и devTools по умолчанию уже подключены
 });
 

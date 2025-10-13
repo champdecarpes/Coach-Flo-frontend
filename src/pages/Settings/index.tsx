@@ -1,10 +1,10 @@
-import TableViewLayout from "@/features/Layouts/BasicLayout/TableViewLayout.tsx";
+import TableLayout from "@/components/Layouts/TableLayout/index";
 
 export default function SettingsLayout () {
 
   return (
-    <TableViewLayout>
+    <TableLayout>
       test
-    </TableViewLayout>
+    </TableLayout>
   );
 };

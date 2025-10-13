@@ -1,236 +1,230 @@
-import {createBrowserRouter, Navigate} from "react-router-dom";
-import {Suspense, lazy} from "react";
-import { RingSuspense } from "@/components/UI/Suspense.styled.tsx"
+import {createBrowserRouter, Navigate} from 'react-router-dom';
+import {Suspense, lazy} from 'react';
+import {RingSuspense} from '@/components/UI/Suspense.styled.tsx';
+import SignIn from '@/pages/Auth/SignIn';
+import SignUp from '@/pages/Auth/SignUp';
+import SignUpInvitation from '@/pages/Auth/SignUpInvitation';
+import InviteUser from '@/pages/Auth/InviteUser';
+import RequireAuth from '@/components/Auth/RequireAuth';
+import TestPage from "@/pages/TestPage.tsx";
 
-/* Clients */
-const ClientsLayout = lazy(() => import("@/pages/Clients/index"));
-const AllClients = lazy(() => import("@/pages/Clients/AllClients"));
-const NeedProgramming = lazy(() => import("@/pages/Clients/NeedProgramming"));
-// const Metrics = lazy(() => import("@/pages/Clients/Client/Metrics"));
-// const Overview = lazy(() => import("@/pages/Clients/Client/Overview"));
-// const Settings = lazy(() => import("@/pages/Clients/Client/Settings"));
-// const Tasks = lazy(() => import("@/pages/Clients/Client/Tasks"));
-// const Training = lazy(() => import("@/pages/Clients/Client/Training"));
 
-/* Library */
-const LibraryLayout = lazy(() => import("@/pages/Library/index"));
-const Exercises = lazy(() => import("@/pages/Library/Exercises"));
-const Workouts = lazy(() => import("@/pages/Library/Workouts"));
-const Sections = lazy(() => import("@/pages/Library/Sections"));
-const Programs = lazy(() => import("@/pages/Library/Programs"));
-const Tasks = lazy(() => import("@/pages/Library/Tasks"));
-const MetricGroups = lazy(() => import("@/pages/Library/MetricGroups"));
+// Clients
+const AllClients = lazy(() => import('@/pages/Clients/AllClients'));
 
-/* Settings */
-const SettingsLayout = lazy(() => import("@/pages/Settings/index"));
 
-/* Settings → WorkSpace */
-const CustomBranding = lazy(() => import("@/pages/Settings/WorkSpace/CustomBranding"));
-const TeamSettings = lazy(() => import("@/pages/Settings/WorkSpace/TeamSettings"));
+// Library
+const Exercises = lazy(() => import('@/pages/Library/Exercises'));
+const Workouts = lazy(() => import('@/pages/Library/Workouts'));
+const Sections = lazy(() => import('@/pages/Library/Sections'));
+const Programs = lazy(() => import('@/pages/Library/Programs'));
+const Tasks = lazy(() => import('@/pages/Library/Tasks'));
+const MetricGroups = lazy(() => import('@/pages/Library/MetricGroups'));
 
-/* Settings → YourAccount */
-const AccountDetails = lazy(() => import("@/pages/Settings/YourAccount/AccountDetails"));
-const Integration = lazy(() => import("@/pages/Settings/YourAccount/Integration"));
-const Notifications = lazy(() => import("@/pages/Settings/YourAccount/Notifications"));
+// Settings
+const SettingsLayout = lazy(() => import('@/pages/Settings/index'));
+
+// Settings - WorkSpace
+const CustomBranding = lazy(() => import('@/pages/Settings/WorkSpace/CustomBranding'));
+const TeamSettings = lazy(() => import('@/pages/Settings/WorkSpace/TeamSettings'));
+
+// Settings - YourAccount
+const AccountDetails = lazy(() => import('@/pages/Settings/YourAccount/AccountDetails'));
+const Integration = lazy(() => import('@/pages/Settings/YourAccount/Integration'));
+const Notifications = lazy(() => import('@/pages/Settings/YourAccount/Notifications'));
 
 const NotFound = () => <div className="p-6">Not Found</div>;
 
-
-export const router = createBrowserRouter([
-  {
-    id: 'root',
-    path: '/',
-    element: <Navigate to="/clients" replace/>,
-    loader: async () => {},
-    children: [
-
-      // Clients
-      {
-        path: 'clients',
-        element:
-          <Suspense fallback={<RingSuspense/>}>
-            <ClientsLayout/>
-          </Suspense>,
-        children: [
-          // Cтраница по умолчанию (/clients)
-          {
-            index: true,
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <AllClients/>
-              </Suspense>
-          },
-
-          // Явные подстраницы
-          {
-            path: "all",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <AllClients/>
-              </Suspense>
-          },
-          {
-            path: "need-programming",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <NeedProgramming/>
-              </Suspense>
-          },
-        ],
+const router = createBrowserRouter([
+    {
+      id: 'root',
+      path: '/',
+      element:
+        <RequireAuth>
+          <Navigate to='/clients' replace/>
+        </RequireAuth>
+      ,
+      loader: async () => {
       },
+      children: [
 
-// Library
-      {
-        path: "library",
-        element: (
-          <Suspense fallback={<RingSuspense/>}>
-            <LibraryLayout/>
-          </Suspense>
-        ),
-        children: [
-          // index → по умолчанию открывается Exercises
-          {
-            index: true,
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Exercises/>
-              </Suspense>
-          },
+        {
+          path: 'test',
+          element: <TestPage/>
+        },
 
-          {
-            path: "exercises",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Exercises/>
-              </Suspense>
-          },
-          {
-            path: "workouts",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Workouts/>
-              </Suspense>
-          },
-          {
-            path: "sections",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Sections/>
-              </Suspense>
-          },
-          {
-            path: "programs",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Programs/>
-              </Suspense>
-          },
-          {
-            path: "tasks",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <Tasks/>
-              </Suspense>
-          },
-          {
-            path: "metric-groups",
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <MetricGroups/>
-              </Suspense>
-          },
-        ],
-      },
+        {
+          path: 'login',
+          element: <SignIn/>
+        },
+        {
+          path: 'signup',
+          element: <SignUp/>
+        },
+        {
+          path: 'invitation/:token',
+          element: <SignUpInvitation/>
+        },
+        {
+          path: 'invite',
+          element:
+            <RequireAuth>
+              <InviteUser/>
+            </RequireAuth>
+        },
 
-// Settings
-      {
-        path: "settings",
-        element: (
-          <Suspense fallback={<RingSuspense/>}>
-            <SettingsLayout/>
-          </Suspense>
-        ),
-        children: [
-          // index → открывается TeamSettings
-          {
-            index: true,
-            element:
-              <Suspense fallback={<RingSuspense/>}>
-                <TeamSettings/>
-              </Suspense>
+        // Clients
+        {
+          path: 'clients',
+          element:
+            <Navigate to='/clients/all' replace/>
+          ,
+          loader: async () => {
           },
+          children: [
 
-          /* WorkSpace */
-          {
-            path: "workspace",
-            children: [
-              {
-                index: true,
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <TeamSettings/>
-                  </Suspense>
-              },
-              {
-                path: "branding",
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <CustomBranding/>
-                  </Suspense>
-              },
-              {
-                path: "team",
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <TeamSettings/>
-                  </Suspense>
-              },
-            ],
-          },
+            // Явные подстраницы
+            {
+              path: 'all',
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <AllClients/>
+                </Suspense>
+            },
+          ],
+        },
 
-          /* YourAccount */
-          {
-            path: "your-account",
-            children: [
-              {
-                index: true,
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <AccountDetails/>
-                  </Suspense>
+        // Library
+        {
+          path: 'library',
+          element: <Navigate to='exercises' replace/>,
+          children: [
+            {
+              index: true,
+              path: 'exercises',
+              loader: async () => {
               },
-              {
-                path: "account-details",
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <AccountDetails/>
-                  </Suspense>
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <Exercises/>
+                </Suspense>,
+            },
+            {
+              path: 'workouts',
+              loader: async () => {
               },
-              {
-                path: "integration",
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <Integration/>
-                  </Suspense>
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <Workouts/>
+                </Suspense>,
+            },
+            {
+              path: 'sections',
+              loader: async () => {
               },
-              {
-                path: "notifications",
-                element:
-                  <Suspense fallback={<RingSuspense/>}>
-                    <Notifications/>
-                  </Suspense>
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <Sections/>
+                </Suspense>,
+            },
+            {
+              path: 'programs',
+              loader: async () => {
               },
-            ],
-          },
-        ],
-      }
-    ]
-  },
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <Programs/>
+                </Suspense>,
+            },
+            {
+              path: 'tasks',
+              loader: async () => {
+              },
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <Tasks/>
+                </Suspense>,
+            },
+            {
+              path: 'metrics',
+              loader: async () => {
+              },
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <MetricGroups/>
+                </Suspense>,
+            },
+          ],
+        },
 
-  /* Catch-all: 404 */
-  {
-    path: "*",
-    element:
-      <NotFound/>
-  },
-])
+        // Settings
+        {
+          path: 'settings',
+          element: (
+            <Suspense fallback={<RingSuspense/>}>
+              <SettingsLayout/>
+            </Suspense>
+          ),
+          children: [
+            {
+              path: 'account',
+              element: <Navigate to='details' replace/>,
+              loader: async () => {
+              },
+              children: [
+                {
+                  index: true,
+                  path: 'details',
+                  element:
+                    <Suspense fallback={<RingSuspense/>}>
+                      <AccountDetails/>
+                    </Suspense>,
+                },
+                {
+                  path: 'integration',
+                  element:
+                    <Suspense fallback={<RingSuspense/>}>
+                      <Integration/>
+                    </Suspense>,
+                },
+                {
+                  path: 'notifications',
+                  element:
+                    <Suspense fallback={<RingSuspense/>}>
+                      <Notifications/>
+                    </Suspense>,
+                },
+              ],
+            },
+            {
+              path: 'branding',
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <CustomBranding/>
+                </Suspense>,
+            },
+            {
+              path: 'team',
+              element:
+                <Suspense fallback={<RingSuspense/>}>
+                  <TeamSettings/>
+                </Suspense>,
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+
+    /* Catch-all: 404 */
+    {
+      path: '*',
+      element:
+        <NotFound/>,
+    }
+    ,
+  ])
+;
+
+
+export default router;

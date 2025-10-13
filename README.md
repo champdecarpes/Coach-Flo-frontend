@@ -1,69 +1,71 @@
-# React + TypeScript + Vite
+### Folder Structure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+coach_flo_frontend/
+├── README.md                 # установка, openapi-ts, dev-режим
+├── package.json / package-lock.json
+├── tsconfig.json             # базовый TS
+├── tsconfig.app.json         # TS для приложения
+├── tsconfig.node.json        # TS для build-скриптов
+├── vite.config.js            # сборка Vite
+├── tailwind.config.js        # тема и пресеты Tailwind
+├── .eslintrc.cjs / .gitignore / Dockerfile
+├── index.html                # если рендер вне Django-шаблона
+├── public/                   # статика (иконки/манifest и т.п.)
+└── src/
+├── index.tsx             # bootstrap (createRoot + провайдеры)
+├── App.tsx               # корневой макет и <Outlet/>
+├── routes/               # React Router v6 (lazy, loaders/actions*)
+├── pages/                # экраны (Auth, Dashboard, Library, Settings…)
+├── components/
+│   ├── ui/               # Button/Card/Modal/Avatar/Loader/Toast
+│   ├── form/             # Input/Select/DatePicker/FileUpload
+│   └── layout/           # Header/Footer/Sidebar/Breadcrumbs
+├── services/
+│   ├── api.ts            # axios; withCredentials; Token/Djoser схема
+│   ├── openapi/          # сгенерированное API из /api/schema/
+│   └── *entity*.ts       # users/brands/exercises/workouts/…
+├── store/                # Redux Toolkit (configureStore, slices)
+├── hooks/                # useAuth/useFetch/useWebSocket…
+├── types/                # TS-модели домена
+├── utils/                # helpers, formatters, constants
+└── assets/               # styles (Tailwind), шрифты, изображения
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Frontend
+
+- `react` for building interactive UIs
+- `react-dom` for rendering the UI
+- `react-router` for page navigation
+- `vite` for bundling static assets
+- Styling
+  - `bootstrap` for providing responsive stylesheets
+  - `react-bootstrap` for providing components built on top of Bootstrap CSS without using plugins
+  - `tailwind` for utility-first CSS with predefined classes that speed up styling directly in markup
+  - `styled-components` for writing scoped, dynamic CSS inside JavaScript/TypeScript components
+- State management and backend integration
+  - `axios` for performing asynchronous calls
+  - `cookie` for easy integration with Django using the `csrftoken` cookie
+  - `openapi-ts` for generating TypeScript client API code from the backend OpenAPI schema
+  - `history` for providing browser history to Connected React Router
+- Utilities
+  - `lodash` for general utility functions
+  - `classnames` for easy working with complex CSS class names on components
+  - `react-refresh` for improving QoL while developing through automatic browser refreshing
+
+### If you're not using Docker:
+
+#### Setup and run the frontend app
+
+- Open a new command line window and go to the project's directory
+- `npm install`
+- `npm run openapi-ts`
+  - This is used to generate the TypeScript client API code from the backend OpenAPI schema
+- `npm run dev`
+  - This is used to serve the frontend assets to be consumed
+    by [django-webpack-loader](https://github.com/django-webpack/django-webpack-loader) and not to run the React
+    application as usual, so don't worry if you try to check what's running on port 3000 and see an error on your
+    browser
+- Open a browser and go to `http://localhost:8000` to see the project running

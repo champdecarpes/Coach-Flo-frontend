@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, {useRef} from 'react';
 import { Copy } from 'lucide-react';
 import styled from 'styled-components';
 // import { useLocation } from 'react-router'; // иконка копирования
@@ -25,16 +25,18 @@ const subLinks = {
 
 interface ListLeftNavPanelProps {
   title: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
-export default function ListLeftNavPanel({ title }: ListLeftNavPanelProps) {
+export default function ClientListPanel({ title, setTitle }: ListLeftNavPanelProps) {
   // const location = useLocation();
   // const pathParts = location.pathname.split('/').filter(Boolean);
   // const section = pathParts[0] as keyof typeof sublinks | undefined;
   // const subLinkNode = section ? sublinks[section] : undefined;
 
 
+  // const [subTitle, setSubTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleCopy = () => {
@@ -47,12 +49,11 @@ export default function ListLeftNavPanel({ title }: ListLeftNavPanelProps) {
 
 
   return (
-    <ListLeftNavContainer>
+    <ClientListPanelContainer>
 
       {/* Title */}
       <TitleBlock>
-
-        <h3>{title}</h3>
+        {/*<h3>{subTitle}</h3>*/}
         <MainTitle>{title}</MainTitle>
       </TitleBlock>
 
@@ -64,6 +65,7 @@ export default function ListLeftNavPanel({ title }: ListLeftNavPanelProps) {
           {subLinks.clients?.list?.map((subLink, i) => (
             <ListLinks
               key={i}
+              onClick={() => setTitle(subLink)}
             >
               {subLink}
             </ListLinks>
@@ -93,11 +95,11 @@ export default function ListLeftNavPanel({ title }: ListLeftNavPanelProps) {
           </div>
         </div>
       </ListBlockContainer>
-    </ListLeftNavContainer>
+    </ClientListPanelContainer>
   );
 }
 
-const ListLeftNavContainer = styled.div`
+const ClientListPanelContainer = styled.div`
   width: 18vw;
   display: flex;
   flex-direction: column;

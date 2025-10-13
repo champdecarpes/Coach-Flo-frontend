@@ -3,23 +3,21 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
+
 import 'css/style.css';
-import App from '@/App';
+import App from './App';
 import './i18n.js';
 import 'ldrs/react/Ring.css';
 
 
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { ApolloProvider } from '@apollo/client/react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'https://flyby-router-demo.herokuapp.com/' }),
+  uri: 'http://localhost:8000/graphql/', // adjust for production
   cache: new InMemoryCache(),
+  credentials: 'include', // include cookies for authentication
 });
 
-
-// import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
 Sentry.init({
   dsn: window.SENTRY_DSN,
@@ -29,11 +27,9 @@ Sentry.init({
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <BrowserRouter>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <App/>
-      </Provider>
-    </ApolloProvider>
-  </BrowserRouter>,
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  </ApolloProvider>,
 );

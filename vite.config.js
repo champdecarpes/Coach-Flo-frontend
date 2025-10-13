@@ -38,6 +38,7 @@ export default defineConfig({
       assets: path.resolve('/src/assets'),
       app: path.resolve('src/app'),
       pages: path.resolve('src/pages'),
+      '@': path.resolve('./src'),
     },
   },
   // Build configuration
